@@ -1,0 +1,17 @@
+[package]
+name = "bge_server"
+version = "0.1.0"
+authors = ["Eric Mikulin <ericm99@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3"
+futures-util = "0.3"
+log = "0.4"
+tokio-tungstenite = "0.13"
+url = "2.2"
+env_logger = "0.8"
+
+[dependencies.tokio]
+features = ["full"]
+version = "1.1"

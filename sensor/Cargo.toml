@@ -1,0 +1,15 @@
+[package]
+name = "bge_sensor"
+version = "0.1.0"
+authors = ["Eric Mikulin <ericm99@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+futures = "0.3"
+futures-util = "0.3"
+tokio-tungstenite = "0.13"
+url = "2.2"
+
+[dependencies.tokio]
+features = ["full"]
+version = "1.1"
