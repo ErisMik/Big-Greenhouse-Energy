@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package bge;
+
+message ViewerRequest {
+    string requestid = 1;
+}

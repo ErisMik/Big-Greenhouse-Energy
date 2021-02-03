@@ -8,6 +8,8 @@ use std::env;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio_tungstenite::{connect_async, tungstenite::protocol::Message};
 
+mod protos;
+
 #[tokio::main]
 async fn main() {
     let connect_addr = env::args()
@@ -45,6 +47,6 @@ async fn read_stdin(tx: futures::channel::mpsc::UnboundedSender<Message>) {
             Ok(n) => n,
         };
         buf.truncate(n);
-        tx.unbounded_send(Message::binary(buf)).unwrap();
+        tx.unbounded_send(Message::text(std::str::from_utf8(&buf).unwrap())).unwrap();
     }
 }

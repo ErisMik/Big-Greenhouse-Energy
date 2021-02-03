@@ -2,6 +2,7 @@ extern crate futures;
 extern crate parking_lot;
 extern crate sqlx;
 extern crate tokio;
+extern crate tokio_stream;
 extern crate warp;
 
 use std::collections::HashMap;
@@ -14,6 +15,7 @@ use futures::{FutureExt, StreamExt};
 use parking_lot::Mutex;
 use sqlx::{Connection, SqliteConnection};
 use tokio::sync::{mpsc, RwLock};
+use tokio_stream::wrappers::UnboundedReceiverStream;
 use warp::ws::{Message, WebSocket};
 use warp::Filter;
 
@@ -35,16 +37,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let viewer_websocket = warp::path("viewerws")
         .and(warp::ws())
-        .map(|ws: warp::ws::Ws| {
-            ws.on_upgrade(|websocket| {
-                let (tx, rx) = websocket.split();
-                rx.forward(tx).map(|result| {
-                    if let Err(e) = result {
-                        eprintln!("websocket error: {:?}", e);
-                    }
-                })
-            })
-        });
+        .and(users)
+        .map(|ws: warp::ws::Ws, users| ws.on_upgrade(move |socket| user_connected(socket, users)));
 
     let sensors = Sensors::default();
     let sensors = warp::any().map(move || sensors.clone());
@@ -65,5 +59,59 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-async fn sensor_connected(ws: WebSocket, users: Users, database: Database) {
+async fn user_connected(ws: WebSocket, users: Users) {
+    let my_id = NEXT_USER_ID.fetch_add(1, Ordering::Relaxed);
+    println!("User {} connected", my_id);
+
+    let (user_ws_tx, mut user_ws_rx) = ws.split();
+
+    let (tx, rx) = mpsc::unbounded_channel();
+    let rx = UnboundedReceiverStream::new(rx);
+    tokio::task::spawn(rx.forward(user_ws_tx).map(|result| {
+        if let Err(e) = result {
+            eprintln!("websocket send error: {}", e);
+        }
+    }));
+
+    users.write().await.insert(my_id, tx);
+
+    let users_disconnect = users.clone();
+
+    while let Some(result) = user_ws_rx.next().await {
+        let msg = match result {
+            Ok(msg) => msg,
+            Err(e) => {
+                eprintln!("websocket error(uid={}): {}", my_id, e);
+                break;
+            }
+        };
+        user_message(my_id, msg, &users).await;
+    }
+
+    user_disconnected(my_id, &users_disconnect).await;
 }
+
+async fn user_message(my_id: usize, msg: Message, users: &Users) {
+    let msg = if let Ok(s) = msg.to_str() {
+        s
+    } else {
+        println!("Message \"{:?}\" not string", msg);
+        return;
+    };
+
+    let new_msg = format!("<User#{}>: {}", my_id, msg);
+    println!("Sending message {}", new_msg);
+
+    for (&uid, tx) in users.read().await.iter() {
+        if my_id != uid {
+            if let Err(_disconnected) = tx.send(Ok(Message::text(new_msg.clone()))) {}
+        }
+    }
+}
+
+async fn user_disconnected(my_id: usize, users: &Users) {
+    println!("User {} disconnected", my_id);
+    users.write().await.remove(&my_id);
+}
+
+async fn sensor_connected(ws: WebSocket, users: Users, database: Database) {}
