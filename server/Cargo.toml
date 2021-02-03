@@ -6,11 +6,7 @@ edition = "2018"
 
 [dependencies]
 futures = "0.3"
-futures-util = "0.3"
-log = "0.4"
-tokio-tungstenite = "0.13"
-url = "2.2"
-env_logger = "0.8"
+warp = "0.3"
 
 [dependencies.tokio]
 features = ["full"]

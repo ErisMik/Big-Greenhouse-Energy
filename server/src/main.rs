@@ -1,45 +1,22 @@
-extern crate futures_util;
-extern crate log;
-extern crate tokio;
-
-use futures_util::StreamExt;
-use log::info;
-use std::{env, io::Error};
-use tokio::net::{TcpListener, TcpStream};
+use futures::{FutureExt, StreamExt};
+use warp::Filter;
 
 #[tokio::main]
-async fn main() -> Result<(), Error> {
-    let _ = env_logger::try_init();
-    let addr = env::args()
-        .nth(1)
-        .unwrap_or_else(|| "127.0.0.1:8080".to_string());
+async fn main() {
+    let index = warp::get()
+        .and(warp::fs::dir("../viewer/build"));
 
-    // Create the event loop and TCP listener we'll accept connections on.
-    let try_socket = TcpListener::bind(&addr).await;
-    let listener = try_socket.expect("Failed to bind");
-    info!("Listening on: {}", addr);
+    let websocket = warp::path("ws").and(warp::ws()).map(|ws: warp::ws::Ws| {
+        ws.on_upgrade(|websocket| {
+            let (tx, rx) = websocket.split();
+            rx.forward(tx).map(|result| {
+                if let Err(e) = result {
+                    eprintln!("websocket error: {:?}", e);
+                }
+            })
+        })
+    });
 
-    while let Ok((stream, _)) = listener.accept().await {
-        tokio::spawn(accept_connection(stream));
-    }
-
-    Ok(())
-}
-
-async fn accept_connection(stream: TcpStream) {
-    let addr = stream
-        .peer_addr()
-        .expect("connected streams should have a peer address");
-    info!("Peer address: {}", addr);
-
-    let ws_stream = tokio_tungstenite::accept_async(stream)
-        .await
-        .expect("Error during the websocket handshake occurred");
-
-    info!("New WebSocket connection: {}", addr);
-
-    let (write, read) = ws_stream.split();
-    read.forward(write)
-        .await
-        .expect("Failed to forward message")
+    let routes = index.or(websocket);
+    warp::serve(routes).run(([0, 0, 0, 0], 3030)).await;
 }
