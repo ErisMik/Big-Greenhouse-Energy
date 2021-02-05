@@ -3,5 +3,15 @@ syntax = "proto3";
 package bge;
 
 message SensorRequest {
-    string requestid = 1;
+    string requestID = 1;
+}
+
+message SensorResponseHeader {
+    string requestID = 1;
+    int64 dataTimestamp = 2;
+}
+
+message ThermometerResponse {
+    SensorResponseHeader header = 1;
+    double temperatureCelcius = 2;
 }

@@ -7,9 +7,10 @@ edition = "2018"
 [dependencies]
 futures = "0.3"
 futures-util = "0.3"
+protobuf = "2.20"
 tokio-tungstenite = "0.13"
 url = "2.2"
-protobuf = "2.20"
+chrono = "0.4"
 
 [dependencies.tokio]
 features = ["full"]

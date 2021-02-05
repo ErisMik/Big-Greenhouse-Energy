@@ -26,7 +26,7 @@
 #[derive(PartialEq,Clone,Default)]
 pub struct SensorRequest {
     // message fields
-    pub requestid: ::std::string::String,
+    pub requestID: ::std::string::String,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -43,30 +43,30 @@ impl SensorRequest {
         ::std::default::Default::default()
     }
 
-    // string requestid = 1;
+    // string requestID = 1;
 
 
-    pub fn get_requestid(&self) -> &str {
-        &self.requestid
+    pub fn get_requestID(&self) -> &str {
+        &self.requestID
     }
-    pub fn clear_requestid(&mut self) {
-        self.requestid.clear();
+    pub fn clear_requestID(&mut self) {
+        self.requestID.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_requestid(&mut self, v: ::std::string::String) {
-        self.requestid = v;
+    pub fn set_requestID(&mut self, v: ::std::string::String) {
+        self.requestID = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_requestid(&mut self) -> &mut ::std::string::String {
-        &mut self.requestid
+    pub fn mut_requestID(&mut self) -> &mut ::std::string::String {
+        &mut self.requestID
     }
 
     // Take field
-    pub fn take_requestid(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.requestid, ::std::string::String::new())
+    pub fn take_requestID(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.requestID, ::std::string::String::new())
     }
 }
 
@@ -80,7 +80,7 @@ impl ::protobuf::Message for SensorRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.requestid)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.requestID)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -94,8 +94,8 @@ impl ::protobuf::Message for SensorRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.requestid.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.requestid);
+        if !self.requestID.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.requestID);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -103,8 +103,8 @@ impl ::protobuf::Message for SensorRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if !self.requestid.is_empty() {
-            os.write_string(1, &self.requestid)?;
+        if !self.requestID.is_empty() {
+            os.write_string(1, &self.requestID)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -145,9 +145,9 @@ impl ::protobuf::Message for SensorRequest {
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "requestid",
-                |m: &SensorRequest| { &m.requestid },
-                |m: &mut SensorRequest| { &mut m.requestid },
+                "requestID",
+                |m: &SensorRequest| { &m.requestID },
+                |m: &mut SensorRequest| { &mut m.requestID },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<SensorRequest>(
                 "SensorRequest",
@@ -165,7 +165,7 @@ impl ::protobuf::Message for SensorRequest {
 
 impl ::protobuf::Clear for SensorRequest {
     fn clear(&mut self) {
-        self.requestid.clear();
+        self.requestID.clear();
         self.unknown_fields.clear();
     }
 }
@@ -182,9 +182,417 @@ impl ::protobuf::reflect::ProtobufValue for SensorRequest {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct SensorResponseHeader {
+    // message fields
+    pub requestID: ::std::string::String,
+    pub dataTimestamp: i64,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SensorResponseHeader {
+    fn default() -> &'a SensorResponseHeader {
+        <SensorResponseHeader as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SensorResponseHeader {
+    pub fn new() -> SensorResponseHeader {
+        ::std::default::Default::default()
+    }
+
+    // string requestID = 1;
+
+
+    pub fn get_requestID(&self) -> &str {
+        &self.requestID
+    }
+    pub fn clear_requestID(&mut self) {
+        self.requestID.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_requestID(&mut self, v: ::std::string::String) {
+        self.requestID = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_requestID(&mut self) -> &mut ::std::string::String {
+        &mut self.requestID
+    }
+
+    // Take field
+    pub fn take_requestID(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.requestID, ::std::string::String::new())
+    }
+
+    // int64 dataTimestamp = 2;
+
+
+    pub fn get_dataTimestamp(&self) -> i64 {
+        self.dataTimestamp
+    }
+    pub fn clear_dataTimestamp(&mut self) {
+        self.dataTimestamp = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_dataTimestamp(&mut self, v: i64) {
+        self.dataTimestamp = v;
+    }
+}
+
+impl ::protobuf::Message for SensorResponseHeader {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.requestID)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.dataTimestamp = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.requestID.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.requestID);
+        }
+        if self.dataTimestamp != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.dataTimestamp, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.requestID.is_empty() {
+            os.write_string(1, &self.requestID)?;
+        }
+        if self.dataTimestamp != 0 {
+            os.write_int64(2, self.dataTimestamp)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SensorResponseHeader {
+        SensorResponseHeader::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "requestID",
+                |m: &SensorResponseHeader| { &m.requestID },
+                |m: &mut SensorResponseHeader| { &mut m.requestID },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
+                "dataTimestamp",
+                |m: &SensorResponseHeader| { &m.dataTimestamp },
+                |m: &mut SensorResponseHeader| { &mut m.dataTimestamp },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SensorResponseHeader>(
+                "SensorResponseHeader",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SensorResponseHeader {
+        static instance: ::protobuf::rt::LazyV2<SensorResponseHeader> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SensorResponseHeader::new)
+    }
+}
+
+impl ::protobuf::Clear for SensorResponseHeader {
+    fn clear(&mut self) {
+        self.requestID.clear();
+        self.dataTimestamp = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SensorResponseHeader {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SensorResponseHeader {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ThermometerResponse {
+    // message fields
+    pub header: ::protobuf::SingularPtrField<SensorResponseHeader>,
+    pub temperatureCelcius: f64,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ThermometerResponse {
+    fn default() -> &'a ThermometerResponse {
+        <ThermometerResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ThermometerResponse {
+    pub fn new() -> ThermometerResponse {
+        ::std::default::Default::default()
+    }
+
+    // .bge.SensorResponseHeader header = 1;
+
+
+    pub fn get_header(&self) -> &SensorResponseHeader {
+        self.header.as_ref().unwrap_or_else(|| <SensorResponseHeader as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_header(&mut self) {
+        self.header.clear();
+    }
+
+    pub fn has_header(&self) -> bool {
+        self.header.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: SensorResponseHeader) {
+        self.header = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_header(&mut self) -> &mut SensorResponseHeader {
+        if self.header.is_none() {
+            self.header.set_default();
+        }
+        self.header.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> SensorResponseHeader {
+        self.header.take().unwrap_or_else(|| SensorResponseHeader::new())
+    }
+
+    // double temperatureCelcius = 2;
+
+
+    pub fn get_temperatureCelcius(&self) -> f64 {
+        self.temperatureCelcius
+    }
+    pub fn clear_temperatureCelcius(&mut self) {
+        self.temperatureCelcius = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_temperatureCelcius(&mut self, v: f64) {
+        self.temperatureCelcius = v;
+    }
+}
+
+impl ::protobuf::Message for ThermometerResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.header {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.temperatureCelcius = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.header.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.temperatureCelcius != 0. {
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.header.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.temperatureCelcius != 0. {
+            os.write_double(2, self.temperatureCelcius)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ThermometerResponse {
+        ThermometerResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<SensorResponseHeader>>(
+                "header",
+                |m: &ThermometerResponse| { &m.header },
+                |m: &mut ThermometerResponse| { &mut m.header },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "temperatureCelcius",
+                |m: &ThermometerResponse| { &m.temperatureCelcius },
+                |m: &mut ThermometerResponse| { &mut m.temperatureCelcius },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ThermometerResponse>(
+                "ThermometerResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ThermometerResponse {
+        static instance: ::protobuf::rt::LazyV2<ThermometerResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ThermometerResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for ThermometerResponse {
+    fn clear(&mut self) {
+        self.header.clear();
+        self.temperatureCelcius = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ThermometerResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ThermometerResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0csensor.proto\x12\x03bge\"-\n\rSensorRequest\x12\x1c\n\trequestid\
-    \x18\x01\x20\x01(\tR\trequestidb\x06proto3\
+    \n\x0csensor.proto\x12\x03bge\"-\n\rSensorRequest\x12\x1c\n\trequestID\
+    \x18\x01\x20\x01(\tR\trequestID\"Z\n\x14SensorResponseHeader\x12\x1c\n\t\
+    requestID\x18\x01\x20\x01(\tR\trequestID\x12$\n\rdataTimestamp\x18\x02\
+    \x20\x01(\x03R\rdataTimestamp\"x\n\x13ThermometerResponse\x121\n\x06head\
+    er\x18\x01\x20\x01(\x0b2\x19.bge.SensorResponseHeaderR\x06header\x12.\n\
+    \x12temperatureCelcius\x18\x02\x20\x01(\x01R\x12temperatureCelciusb\x06p\
+    roto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;
